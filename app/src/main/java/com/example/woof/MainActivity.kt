@@ -24,6 +24,7 @@ import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -61,7 +62,6 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-
                     WoofApp()
                 }
             }
@@ -74,14 +74,33 @@ class MainActivity : ComponentActivity() {
  */
 @Composable
 fun WoofApp() {
+        Column {
+            WoofTopAppBar(Modifier)
+            LazyColumn {
+                items(dogs) {
+                    DogItem(
+                        dog = it,
+                        modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
+                    )
+                }
+            }
+        }
+}
 
-    Column {
-        WoofTopAppBar(Modifier)
-        LazyColumn {
+
+
+@Composable
+fun WoofApp1() {
+    Scaffold(
+        topBar = {
+            WoofTopAppBar()
+        }
+    ) { it ->
+        LazyColumn(contentPadding = it) {
             items(dogs) {
                 DogItem(
                     dog = it,
-                    modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_small))
+                    modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
                 )
             }
         }
@@ -194,10 +213,10 @@ fun DogInformation(
 @Composable
 fun WoofPreview() {
     WoofTheme(darkTheme = false) {
-
         WoofApp()
     }
 }
+
 
 @Preview
 @Composable
@@ -205,4 +224,42 @@ fun WoofDarkThemePreview(){
     WoofTheme(darkTheme = true) {
         WoofApp()
     }
+}
+@Preview
+@Composable
+fun TESTE(){
+    Surface(
+        modifier = Modifier.fillMaxSize()
+    ){
+    WoofTheme(darkTheme = false) {
+      DogInformation(dogName = 1, dogAge = 23)
+    }}
+}
+@Preview
+@Composable
+fun TESTE2(){
+    WoofTheme(darkTheme = false) {
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            DogInformation(dogName = 1, dogAge = 23)
+        }
+    }
+}
+@Preview
+@Composable
+fun TESTE3(){
+WoofApp()
+}
+@Preview
+@Composable
+fun TESTE4(){
+    WoofTheme(darkTheme = false) {
+        Surface(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            WoofApp1()
+        }
+    }
+
 }
